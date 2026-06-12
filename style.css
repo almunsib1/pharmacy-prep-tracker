@@ -643,11 +643,33 @@ button:disabled {
   justify-self: center;
 }
 
+.active-user-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #168fb3;
+  font-size: 13px;
+}
+
+.active-user-row input {
+  width: auto;
+  min-height: 0;
+  margin: 0;
+}
+
+.user-form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
 .users-table-wrap {
   width: min(100%, 620px);
 }
 
-.delete-user-btn {
+.delete-user-btn,
+.edit-user-btn {
   width: 30px;
   min-width: 30px;
   min-height: 30px;
@@ -659,7 +681,12 @@ button:disabled {
   line-height: 1;
 }
 
-.delete-user-btn:hover {
+.edit-user-btn {
+  color: #168fb3;
+}
+
+.delete-user-btn:hover,
+.edit-user-btn:hover {
   background: transparent;
   transform: scale(1.08);
 }
