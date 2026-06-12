@@ -25,21 +25,38 @@
       <div class="date-box" id="dateBox"></div>
     </div>
 
-    <h1 class="employee-page-title">رفع قائمة وصفات البريد</h1>
+    <h1 class="employee-page-title">إرسال قائمة وصفات البريد اليومية</h1>
 
-    <section class="view upload-page">
+    <section id="uploadLoginView" class="view auth-view">
+      <form id="uploadLoginForm" class="panel employee-login-card">
+        <label for="username">اسم المستخدم</label>
+        <input id="username" name="username" autocomplete="username" required>
+
+        <label for="pin">PIN</label>
+        <input id="pin" name="pin" type="password" inputmode="numeric" autocomplete="current-password" required>
+
+        <button class="primary-btn icon-action" type="submit" title="دخول" aria-label="دخول">↵</button>
+        <p id="loginMessage" class="message" role="status"></p>
+      </form>
+    </section>
+
+    <section id="uploadView" class="view upload-page hidden">
+      <header class="topbar employee-toolbar upload-toolbar">
+        <div class="user-chip">
+          <strong id="currentUser"></strong>
+          <button id="logoutBtn" class="logout-icon" type="button" title="خروج" aria-label="خروج">↪</button>
+        </div>
+      </header>
+
       <section class="upload-box upload-standalone">
-        <p class="muted upload-intro">ارفع ملف Excel أو CSV من فريق الطباعة.</p>
+        <p class="muted upload-intro">ارفع ملف Excel أو CSV.</p>
         <form id="uploadForm">
-          <label for="uploadedBy">اسم الرافع</label>
-          <input id="uploadedBy" autocomplete="name" placeholder="مثال: فريق الطباعة" required>
-
           <label for="fileInput">ملف القائمة</label>
           <input id="fileInput" type="file" accept=".xlsx,.xls,.csv" required>
 
-          <button class="done-btn upload-submit" type="submit">رفع قائمة اليوم</button>
+          <button class="done-btn upload-submit" type="submit">إرسال قائمة</button>
         </form>
-        <p class="hint">سيتم حفظ عمودي رقم الملف واسم المريض فقط. عند رفع قائمة جديدة يتم استبدال قائمة اليوم الحالية.</p>
+        <p class="hint warning-hint">سيتم حذف القائمة الحالية عند رفع قائمة جديدة.</p>
         <p id="uploadMessage" class="message" role="status"></p>
       </section>
     </section>
