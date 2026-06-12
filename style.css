@@ -612,6 +612,58 @@ button:disabled {
   color: #168fb3;
 }
 
+.users-page {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.users-form {
+  display: grid;
+  gap: 8px;
+  width: min(100%, 360px);
+  padding: 14px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.users-form input {
+  min-height: 42px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.users-form label {
+  color: #168fb3;
+  font-size: 13px;
+}
+
+.users-form button {
+  justify-self: center;
+}
+
+.users-table-wrap {
+  width: min(100%, 620px);
+}
+
+.delete-user-btn {
+  width: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  padding: 0;
+  background: transparent;
+  color: var(--accent);
+  border: 0;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.delete-user-btn:hover {
+  background: transparent;
+  transform: scale(1.08);
+}
+
 .supervisor-panel {
   display: grid;
   gap: 14px;
