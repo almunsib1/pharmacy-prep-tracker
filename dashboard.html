@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>لوحة مشرف تحضير الوصفات</title>
+  <title>مؤشر وصفات البريد اليومي</title>
   <link rel="stylesheet" href="style.css?v=20260612-login-actions">
   <script src="dashboard.js?v=20260612-login-pin" defer></script>
 </head>
@@ -103,8 +103,18 @@
       <p id="supervisorMessage" class="message" role="status"></p>
 
       <section class="print-report" aria-label="التقرير اليومي">
-        <h2>تقرير وصفات البريد اليومي</h2>
-        <p id="printReportDate" class="print-report-date"></p>
+        <header class="print-report-head">
+          <img src="logo.png" alt="Logo">
+          <div>
+            <p>تجمع المدينة المنورة الصحي</p>
+            <p>مستشفى الملك فهد بالمدينة المنورة</p>
+            <p>إدارة الرعاية الصيدلانية</p>
+          </div>
+        </header>
+        <div class="print-title-block">
+          <h2>التقرير اليومي لوصفات البريد</h2>
+          <p id="printReportDate" class="print-report-date"></p>
+        </div>
         <div class="print-summary">
           <div>
             <span>إجمالي القائمة</span>
@@ -114,7 +124,12 @@
             <span>جاهزة للتسليم</span>
             <strong id="printPreparedCount">0</strong>
           </div>
+          <div>
+            <span>تحت المعالجة</span>
+            <strong id="printPendingCount">0</strong>
+          </div>
         </div>
+        <h3 class="print-section-title">إنجاز الموظفين</h3>
         <table class="print-user-table">
           <thead>
             <tr>
@@ -124,6 +139,7 @@
           </thead>
           <tbody id="printUserBody"></tbody>
         </table>
+        <p class="print-report-footer">تم إنشاء التقرير من مؤشر وصفات البريد اليومي.</p>
       </section>
     </section>
   </main>

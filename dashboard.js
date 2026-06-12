@@ -19,6 +19,7 @@ const els = {
   pendingCount: document.getElementById("pendingCount"),
   printTotalCount: document.getElementById("printTotalCount"),
   printPreparedCount: document.getElementById("printPreparedCount"),
+  printPendingCount: document.getElementById("printPendingCount"),
   printUserBody: document.getElementById("printUserBody"),
   fileSearchInput: document.getElementById("fileSearchInput"),
   fileSearchBtn: document.getElementById("fileSearchBtn"),
@@ -208,6 +209,7 @@ function renderPrintReport(summary = {}) {
   els.printReportDate.textContent = els.dateBox.textContent;
   els.printTotalCount.textContent = summary.total || 0;
   els.printPreparedCount.textContent = summary.prepared || 0;
+  els.printPendingCount.textContent = summary.pending || 0;
   renderPrintUsers(summary.preparedByUser || []);
 }
 
