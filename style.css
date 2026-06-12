@@ -1612,8 +1612,9 @@ button:disabled {
   }
 
   .print-report-head img {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
+    transform: translateY(3px);
     object-fit: contain;
   }
 
@@ -1664,8 +1665,8 @@ button:disabled {
   .print-summary div {
     border: 1px solid #cbd5e1;
     border-top: 3px solid #168fb3;
-    border-radius: 8px;
-    padding: 5px 4px 4px;
+    border-radius: 7px;
+    padding: 4px 4px 3px;
     text-align: center;
     background: #f8fafc;
   }
@@ -1675,12 +1676,12 @@ button:disabled {
     color: #475569;
     font-size: 9.5px;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
   }
 
   .print-summary strong {
     color: #0f172a;
-    font-size: 19px;
+    font-size: 17px;
     line-height: 1;
   }
 
