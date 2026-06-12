@@ -23,6 +23,7 @@ const els = {
 let editingUsername = "";
 
 document.addEventListener("DOMContentLoaded", initUsers);
+window.addEventListener("pagehide", clearAdminSession);
 
 function initUsers() {
   renderDate();
@@ -55,14 +56,18 @@ function showUsersView() {
 }
 
 function adminLogout() {
-  sessionStorage.removeItem("adminUsername");
-  sessionStorage.removeItem("adminPin");
+  clearAdminSession();
   els.usersView.classList.add("hidden");
   els.adminLoginView.classList.remove("hidden");
   els.adminLoginForm.reset();
   setAdminLoginMessage("");
   setMessage("");
   resetForm();
+}
+
+function clearAdminSession() {
+  sessionStorage.removeItem("adminUsername");
+  sessionStorage.removeItem("adminPin");
 }
 
 function hasAdminSession() {

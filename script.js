@@ -26,6 +26,7 @@ let selectedPrescription = null;
 let isScanning = false;
 
 document.addEventListener("DOMContentLoaded", init);
+window.addEventListener("pagehide", clearAuthSession);
 
 function init() {
   renderDate();
@@ -82,14 +83,18 @@ function showPrep(username) {
 }
 
 function logout() {
-  localStorage.removeItem("preparerUsername");
-  localStorage.removeItem("preparerDisplayName");
+  clearAuthSession();
   stopCamera();
   selectedPrescription = null;
   els.prepView.classList.add("hidden");
   els.loginView.classList.remove("hidden");
   els.loginForm.reset();
   clearResult();
+}
+
+function clearAuthSession() {
+  localStorage.removeItem("preparerUsername");
+  localStorage.removeItem("preparerDisplayName");
 }
 
 async function startCamera() {

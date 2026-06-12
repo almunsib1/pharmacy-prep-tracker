@@ -15,6 +15,7 @@ const els = {
 };
 
 document.addEventListener("DOMContentLoaded", initUpload);
+window.addEventListener("pagehide", clearAuthSession);
 
 function initUpload() {
   renderDate();
@@ -50,12 +51,16 @@ function showUpload(username) {
 }
 
 function logout() {
-  localStorage.removeItem("preparerUsername");
-  localStorage.removeItem("preparerDisplayName");
+  clearAuthSession();
   els.uploadView.classList.add("hidden");
   els.uploadLoginView.classList.remove("hidden");
   els.uploadLoginForm.reset();
   setMessage(els.loginMessage, "");
+}
+
+function clearAuthSession() {
+  localStorage.removeItem("preparerUsername");
+  localStorage.removeItem("preparerDisplayName");
 }
 
 function renderDate() {

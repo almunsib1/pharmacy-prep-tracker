@@ -32,6 +32,7 @@ let refreshTimer = null;
 let isLoadingSupervisorData = false;
 
 document.addEventListener("DOMContentLoaded", initDashboard);
+window.addEventListener("pagehide", clearDashboardSession);
 
 function initDashboard() {
   if (hasDashboardSession()) showDashboard();
@@ -70,8 +71,7 @@ function showDashboard() {
 }
 
 function dashboardLogout() {
-  sessionStorage.removeItem("dashboardAdminUsername");
-  sessionStorage.removeItem("dashboardAdminPin");
+  clearDashboardSession();
   if (refreshTimer) {
     clearInterval(refreshTimer);
     refreshTimer = null;
@@ -80,6 +80,11 @@ function dashboardLogout() {
   els.dashboardLoginView.classList.remove("hidden");
   els.dashboardLoginForm.reset();
   setLoginMessage("");
+}
+
+function clearDashboardSession() {
+  sessionStorage.removeItem("dashboardAdminUsername");
+  sessionStorage.removeItem("dashboardAdminPin");
 }
 
 function hasDashboardSession() {
