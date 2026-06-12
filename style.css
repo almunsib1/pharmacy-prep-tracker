@@ -869,14 +869,14 @@ button:disabled {
 }
 
 .dashboard-icon-btn {
-  width: 38px;
-  min-width: 38px;
-  min-height: 38px;
+  width: 52px;
+  min-width: 52px;
+  min-height: 52px;
   padding: 0;
   border: 0;
   background: transparent;
   color: #168fb3;
-  font-size: 25px;
+  font-size: 36px;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -1247,10 +1247,10 @@ button:disabled {
   }
 
   .dashboard-icon-btn {
-    width: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    font-size: 24px;
+    width: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 32px;
   }
 
   .topbar,
