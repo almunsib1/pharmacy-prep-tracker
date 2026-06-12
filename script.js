@@ -30,8 +30,9 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
   renderDate();
   const savedUser = localStorage.getItem("preparerUsername");
+  const savedName = localStorage.getItem("preparerDisplayName") || savedUser;
   if (savedUser) {
-    showPrep(savedUser);
+    showPrep(savedName);
   }
 
   els.loginForm.addEventListener("submit", handleLogin);
@@ -66,7 +67,8 @@ async function handleLogin(event) {
     const response = await api("login", { username, pin });
     if (!response.ok) throw new Error(response.message || "بيانات الدخول غير صحيحة.");
     localStorage.setItem("preparerUsername", username);
-    showPrep(username);
+    localStorage.setItem("preparerDisplayName", response.displayName || username);
+    showPrep(response.displayName || username);
   } catch (error) {
     setMessage(els.loginMessage, error.message, "error");
   }
@@ -81,6 +83,7 @@ function showPrep(username) {
 
 function logout() {
   localStorage.removeItem("preparerUsername");
+  localStorage.removeItem("preparerDisplayName");
   stopCamera();
   selectedPrescription = null;
   els.prepView.classList.add("hidden");
@@ -142,7 +145,9 @@ function updateCameraButton() {
   const text = document.getElementById("cameraButtonText");
   els.startCameraBtn.classList.toggle("is-on", isScanning);
   els.startCameraBtn.setAttribute("aria-pressed", String(isScanning));
-  if (text) text.textContent = isScanning ? "إيقاف الكاميرا" : "تشغيل الكاميرا";
+  els.startCameraBtn.setAttribute("title", isScanning ? "إيقاف الكاميرا" : "إلتقاط");
+  els.startCameraBtn.setAttribute("aria-label", isScanning ? "إيقاف الكاميرا" : "إلتقاط");
+  if (text) text.textContent = isScanning ? "■" : "📷";
 }
 
 async function handleScanSuccess(decodedText) {
@@ -195,7 +200,7 @@ async function lookupPrescription(fileNumber) {
 
 async function markPrepared() {
   if (!selectedPrescription) return;
-  const preparedBy = localStorage.getItem("preparerUsername");
+  const preparedBy = localStorage.getItem("preparerDisplayName") || localStorage.getItem("preparerUsername");
 
   els.markPreparedBtn.disabled = true;
   setMessage(els.scanMessage, "جاري تسجيل التحضير...");
@@ -208,11 +213,10 @@ async function markPrepared() {
 
     if (!response.ok) throw new Error(response.message || "لم يتم تسجيل التحضير.");
 
-    setMessage(els.scanMessage, "تم تسجيل التحضير بنجاح.", "success");
+    setMessage(els.scanMessage, "تم الإرسال بنجاح.", "success");
     setTimeout(() => {
-      clearResult();
-      if (scanner && isScanning) scanner.resume();
-    }, 1200);
+      window.location.reload();
+    }, 1500);
   } catch (error) {
     setMessage(els.scanMessage, error.message, "error");
   }
