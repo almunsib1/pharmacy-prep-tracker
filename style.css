@@ -1514,12 +1514,13 @@ button:disabled {
 
 @media print {
   @page {
-    size: A4 landscape;
-    margin: 10mm;
+    size: A4 portrait;
+    margin: 6mm;
   }
 
   body {
     background: #fff;
+    width: 100%;
   }
 
   .app-shell {
@@ -1553,11 +1554,15 @@ button:disabled {
 
   .print-report {
     display: grid;
-    gap: 9px;
-    max-width: 267mm;
+    gap: 6px;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
     margin: 0 auto;
     color: #111827;
     font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   .print-report-head {
@@ -1565,13 +1570,13 @@ button:disabled {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 4px;
     border-bottom: 1.5px solid #168fb3;
   }
 
   .print-report-head img {
-    width: 44px;
-    height: 44px;
+    width: 38px;
+    height: 38px;
     object-fit: contain;
   }
 
@@ -1579,26 +1584,26 @@ button:disabled {
     text-align: right;
     color: #168fb3;
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.18;
   }
 
   .print-report-head p {
     margin: 0;
-    font-size: 9px;
+    font-size: 8.5px;
   }
 
   .print-title-block {
     display: grid;
     justify-items: center;
     gap: 3px;
-    padding: 5px 0 1px;
+    padding: 3px 0 0;
   }
 
   .print-report h2 {
     margin: 0;
     text-align: center;
     color: #168fb3;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
     line-height: 1.25;
   }
@@ -1607,21 +1612,23 @@ button:disabled {
     margin: 0;
     text-align: center;
     color: #475569;
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: 600;
   }
 
   .print-summary {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
+    gap: 6px;
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   .print-summary div {
     border: 1px solid #cbd5e1;
     border-top: 4px solid #168fb3;
     border-radius: 8px;
-    padding: 8px 7px;
+    padding: 5px 5px;
     text-align: center;
     background: #f8fafc;
   }
@@ -1629,21 +1636,21 @@ button:disabled {
   .print-summary span {
     display: block;
     color: #475569;
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
   }
 
   .print-summary strong {
     color: #0f172a;
-    font-size: 25px;
+    font-size: 21px;
     line-height: 1;
   }
 
   .print-section-title {
-    margin: 2px 0 -4px;
+    margin: 0 0 -3px;
     color: #168fb3;
-    font-size: 13px;
+    font-size: 11px;
     line-height: 1.4;
   }
 
@@ -1653,13 +1660,15 @@ button:disabled {
     overflow: hidden;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 9.5px;
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   .print-user-table th,
   .print-user-table td {
     border-bottom: 1px solid #e2e8f0;
-    padding: 7px 9px;
+    padding: 4px 6px;
     text-align: center;
   }
 
