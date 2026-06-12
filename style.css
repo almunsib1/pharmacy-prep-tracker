@@ -1529,7 +1529,7 @@ button:disabled {
 
   body {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
   }
 
@@ -1543,7 +1543,7 @@ button:disabled {
     border-radius: 0;
     box-shadow: none;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
   }
 
@@ -1563,7 +1563,7 @@ button:disabled {
 
   #supervisorPanel {
     display: flex !important;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     width: 210mm;
     height: 297mm;
