@@ -10,7 +10,6 @@ const els = {
   currentUser: document.getElementById("currentUser"),
   logoutBtn: document.getElementById("logoutBtn"),
   startCameraBtn: document.getElementById("startCameraBtn"),
-  manualBtn: document.getElementById("manualBtn"),
   manualForm: document.getElementById("manualForm"),
   manualFileNumber: document.getElementById("manualFileNumber"),
   scanMessage: document.getElementById("scanMessage"),
@@ -41,7 +40,6 @@ function init() {
   els.loginForm.addEventListener("submit", handleLogin);
   els.logoutBtn.addEventListener("click", logout);
   els.startCameraBtn.addEventListener("click", toggleCamera);
-  els.manualBtn.addEventListener("click", () => els.manualForm.classList.toggle("hidden"));
   els.manualForm.addEventListener("submit", handleManualSearch);
   els.markPreparedBtn.addEventListener("click", markPrepared);
 }

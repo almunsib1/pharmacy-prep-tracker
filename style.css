@@ -572,7 +572,7 @@ button:disabled {
   justify-content: center;
   align-items: center;
   width: min(100%, 360px);
-  gap: 10px;
+  gap: 8px;
 }
 
 .camera-toggle {
@@ -615,15 +615,18 @@ button:disabled {
 
 .manual-form {
   display: grid;
-  grid-template-columns: 150px auto;
+  grid-template-columns: 126px 32px;
   align-items: center;
   justify-content: center;
-  width: min(100%, 360px);
-  gap: 10px;
+  width: auto;
+  gap: 8px;
 }
 
 .manual-form input {
+  width: 126px;
   min-width: 0;
+  min-height: 32px;
+  padding: 5px 8px;
   text-align: center;
 }
 
@@ -1214,8 +1217,7 @@ button:disabled {
   .result-card,
   .employee-toolbar,
   .upload-toolbar,
-  .scan-actions,
-  .manual-form {
+  .scan-actions {
     width: min(100%, 340px);
   }
 
@@ -1265,6 +1267,7 @@ button:disabled {
 
   .manual-form {
     grid-template-columns: 116px 30px;
+    width: auto;
     gap: 8px;
   }
 
@@ -1424,10 +1427,14 @@ button:disabled {
     min-height: 200px;
   }
 
-  .scan-actions,
-  .manual-form {
+  .scan-actions {
     grid-template-columns: 116px 30px;
     justify-content: center;
+  }
+
+  .manual-form {
+    grid-template-columns: 116px 30px;
+    width: auto;
   }
 
   .manual-form input {

@@ -54,12 +54,11 @@
           <button id="startCameraBtn" class="camera-toggle icon-action" type="button" aria-pressed="false" title="إلتقاط" aria-label="إلتقاط">
             <span id="cameraButtonText" aria-hidden="true">📷</span>
           </button>
-          <button id="manualBtn" class="ghost-btn icon-action" type="button" title="إدخال يدوي" aria-label="إدخال يدوي">⌨</button>
+          <form id="manualForm" class="manual-form">
+            <input id="manualFileNumber" inputmode="numeric" placeholder="MRN">
+            <button class="icon-action" type="submit" title="بحث" aria-label="بحث">⌕</button>
+          </form>
         </div>
-        <form id="manualForm" class="manual-form hidden">
-          <input id="manualFileNumber" inputmode="numeric" placeholder="MRN">
-          <button class="icon-action" type="submit" title="بحث" aria-label="بحث">⌕</button>
-        </form>
         <p id="scanMessage" class="message" role="status"></p>
       </section>
 
