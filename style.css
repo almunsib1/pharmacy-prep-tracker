@@ -1582,19 +1582,24 @@ button:disabled {
     display: grid;
     gap: 7px;
     box-sizing: border-box;
-    width: 176mm;
-    max-width: 176mm;
-    max-height: 260mm;
+    width: 184mm;
+    max-width: 184mm;
+    max-height: 274mm;
     min-height: 0;
     margin: 0;
-    padding: 8mm;
+    padding: 7mm 7mm 4mm;
     overflow: hidden;
     color: #111827;
     font-family: "Segoe UI", Tahoma, Arial, sans-serif;
     border: 1px solid #dbe7ea;
-    border-radius: 8px;
+    border-radius: 7px;
     page-break-inside: avoid;
     break-inside: avoid;
+    page-break-after: avoid;
+  }
+
+  .print-report::after {
+    content: none;
   }
 
   .print-report-head {
@@ -1660,7 +1665,7 @@ button:disabled {
     border: 1px solid #cbd5e1;
     border-top: 3px solid #168fb3;
     border-radius: 8px;
-    padding: 5px 4px;
+    padding: 5px 4px 4px;
     text-align: center;
     background: #f8fafc;
   }
@@ -1700,7 +1705,7 @@ button:disabled {
   .print-user-table th,
   .print-user-table td {
     border-bottom: 1px solid #e2e8f0;
-    padding: 3.5px 5px;
+    padding: 3px 5px;
     text-align: center;
   }
 
