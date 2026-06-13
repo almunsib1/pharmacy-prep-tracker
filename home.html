@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بوابة خدمات الرعاية الصيدلانية</title>
+<title>خدمات الرعاية الصيدلانية</title>
 <style>
 *{box-sizing:border-box}
 body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:16px;color:#168fb3}
@@ -15,7 +15,7 @@ body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:16px;color
 hr{border:none;border-top:1px solid #e5e7eb;margin:14px 0}
 .meta-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;direction:ltr}
 .date-box{color:#168fb3;padding:4px 0;font-size:13px;font-weight:bold;text-align:center}
-.language-chip{color:#168fb3;font-size:13px;font-weight:bold;padding:4px 0;white-space:nowrap}
+.language-chip{color:#168fb3;font-size:13px;font-weight:bold;padding:4px 0;white-space:nowrap;background:transparent;border:0;cursor:pointer;font-family:inherit}
 .page-title{text-align:center;font-size:24px;font-weight:bold;margin:18px 0 8px;color:#168fb3}
 .subtitle{text-align:center;color:#334155;font-size:15px;line-height:1.7;margin:0 auto 22px;max-width:620px}
 .portal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:920px;margin:0 auto}
@@ -49,9 +49,9 @@ body{padding:10px;background:#fff}
   <div class="top-bar">
     <img class="logo" src="logo.png" alt="Logo">
     <div class="official-header">
-      <h2>تجمع المدينة المنورة الصحي</h2>
-      <h3>مستشفى الملك فهد بالمدينة المنورة</h3>
-      <h3>إدارة الرعاية الصيدلانية</h3>
+      <h2 id="officialLine1">تجمع المدينة المنورة الصحي</h2>
+      <h3 id="officialLine2">مستشفى الملك فهد بالمدينة المنورة</h3>
+      <h3 id="officialLine3">إدارة الرعاية الصيدلانية</h3>
     </div>
   </div>
 
@@ -59,17 +59,17 @@ body{padding:10px;background:#fff}
 
   <div class="meta-row">
     <div class="date-box" id="dateBox"></div>
-    <div class="language-chip">🌐 ع | E</div>
+    <button type="button" class="language-chip" id="languageToggle" onclick="toggleLanguage()">🌐 ع | E</button>
   </div>
 
-  <h1 class="page-title">خدمات الرعاية الصيدلانية</h1>
-  <p class="subtitle">بوابة موحدة لتقديم الخدمات الصيدلانية في العيادات الخارجية.</p>
+  <h1 class="page-title" id="pageTitle">خدمات الرعاية الصيدلانية</h1>
+  <p class="subtitle" id="subtitle">بوابة موحدة لتقديم الخدمات الصيدلانية في العيادات الخارجية.</p>
 
   <div class="portal-grid">
     <a class="portal-card" href="prescriptions/index.html" target="_blank" rel="noopener">
       <div class="card-text">
-        <p class="card-title">البريد الدوائي</p>
-        <p class="card-desc">الدخول إلى خدمات رفع ومتابعة وتحضير وصفات البريد.</p>
+        <p class="card-title" id="mailTitle">البريد الدوائي</p>
+        <p class="card-desc" id="mailDesc">الدخول إلى خدمات رفع ومتابعة وتحضير وصفات البريد.</p>
       </div>
       <div class="card-icon">✉</div>
     </a>
@@ -77,20 +77,20 @@ body{padding:10px;background:#fff}
     <div class="portal-card has-actions" id="medPortal" role="link" tabindex="0" aria-label="صرف الأدوية الشهرية بموعد">
       <div class="card-head">
         <div class="card-text">
-          <p class="card-title">صرف الأدوية الشهرية بموعد</p>
-          <p class="card-desc">بوابة خدمة حجز ومتابعة مواعيد صرف الأدوية الشهرية.</p>
+          <p class="card-title" id="medTitle">صرف الأدوية الشهرية بموعد</p>
+          <p class="card-desc" id="medDesc">بوابة خدمة حجز ومتابعة مواعيد صرف الأدوية الشهرية.</p>
         </div>
         <div class="card-icon">💊</div>
       </div>
       <div class="card-actions">
-        <a class="mini-link" href="medication/index.html" target="_blank" rel="noopener">رابط الحجز</a>
+        <a class="mini-link" id="bookingLink" href="medication/index.html" target="_blank" rel="noopener">رابط الحجز</a>
       </div>
     </div>
 
     <a class="portal-card" href="admin.html" target="_blank" rel="noopener">
       <div class="card-text">
-        <p class="card-title">إدارة المستخدمين</p>
-        <p class="card-desc">إدارة المستخدمين والصلاحيات للمشروعين من صفحة واحدة.</p>
+        <p class="card-title" id="adminTitle">إدارة المستخدمين</p>
+        <p class="card-desc" id="adminDesc">إدارة المستخدمين والصلاحيات للمشروعين من صفحة واحدة.</p>
       </div>
       <div class="card-icon">⚙</div>
     </a>
@@ -98,10 +98,71 @@ body{padding:10px;background:#fff}
 </div>
 
 <script>
+let currentLang = "ar";
+
+const text = {
+  ar: {
+    title: "خدمات الرعاية الصيدلانية",
+    officialLine1: "تجمع المدينة المنورة الصحي",
+    officialLine2: "مستشفى الملك فهد بالمدينة المنورة",
+    officialLine3: "إدارة الرعاية الصيدلانية",
+    subtitle: "بوابة موحدة لتقديم الخدمات الصيدلانية في العيادات الخارجية.",
+    mailTitle: "البريد الدوائي",
+    mailDesc: "الدخول إلى خدمات رفع ومتابعة وتحضير وصفات البريد.",
+    medTitle: "صرف الأدوية الشهرية بموعد",
+    medDesc: "بوابة خدمة حجز ومتابعة مواعيد صرف الأدوية الشهرية.",
+    bookingLink: "رابط الحجز",
+    adminTitle: "إدارة المستخدمين",
+    adminDesc: "إدارة المستخدمين والصلاحيات للمشروعين من صفحة واحدة."
+  },
+  en: {
+    title: "Pharmaceutical Care Services",
+    officialLine1: "Madinah Health Cluster",
+    officialLine2: "King Fahad Hospital - Madinah",
+    officialLine3: "Pharmaceutical Care Administration",
+    subtitle: "A unified portal for outpatient pharmacy services.",
+    mailTitle: "Mail Pharmacy",
+    mailDesc: "Access mail prescription upload, tracking, and preparation services.",
+    medTitle: "Monthly Medication Pickup by Appointment",
+    medDesc: "A portal for booking and managing monthly medication pickup appointments.",
+    bookingLink: "Booking Link",
+    adminTitle: "User Management",
+    adminDesc: "Manage users and permissions for both services from one page."
+  }
+};
+
+function setLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.title = text[lang].title;
+  document.getElementById("officialLine1").innerText = text[lang].officialLine1;
+  document.getElementById("officialLine2").innerText = text[lang].officialLine2;
+  document.getElementById("officialLine3").innerText = text[lang].officialLine3;
+  document.getElementById("pageTitle").innerText = text[lang].title;
+  document.getElementById("subtitle").innerText = text[lang].subtitle;
+  document.getElementById("mailTitle").innerText = text[lang].mailTitle;
+  document.getElementById("mailDesc").innerText = text[lang].mailDesc;
+  document.getElementById("medTitle").innerText = text[lang].medTitle;
+  document.getElementById("medDesc").innerText = text[lang].medDesc;
+  document.getElementById("bookingLink").innerText = text[lang].bookingLink;
+  document.getElementById("adminTitle").innerText = text[lang].adminTitle;
+  document.getElementById("adminDesc").innerText = text[lang].adminDesc;
+  document.getElementById("medPortal").setAttribute("aria-label", text[lang].medTitle);
+  renderDate();
+}
+
+function toggleLanguage() {
+  setLanguage(currentLang === "ar" ? "en" : "ar");
+}
+
 function renderDate() {
   const now = new Date();
   const date = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Riyadh" }).format(now);
-  const dayName = new Intl.DateTimeFormat("ar-SA", { timeZone: "Asia/Riyadh", weekday: "long" }).format(now);
+  const dayName = new Intl.DateTimeFormat(currentLang === "ar" ? "ar-SA" : "en-US", {
+    timeZone: "Asia/Riyadh",
+    weekday: "long"
+  }).format(now);
   document.getElementById("dateBox").innerText = `${dayName} - ${date}`;
 }
 
@@ -116,7 +177,7 @@ medPortal.addEventListener("keydown", function(event) {
     window.open("medication/portal.html", "_blank", "noopener");
   }
 });
-renderDate();
+setLanguage("ar");
 </script>
 </body>
 </html>
