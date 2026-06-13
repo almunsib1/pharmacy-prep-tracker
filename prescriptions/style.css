@@ -2009,6 +2009,7 @@ button:disabled {
   .status-filter,
   .dashboard-search,
   .table-wrap,
+  .main-home-link,
   #supervisorMessage {
     display: none !important;
   }
@@ -2034,11 +2035,11 @@ button:disabled {
     display: grid;
     gap: 7px;
     box-sizing: border-box;
-    width: 184mm;
-    max-width: 184mm;
+    width: 196mm;
+    max-width: 196mm;
     max-height: 274mm;
-    min-height: 0;
-    margin: 8mm 0 0;
+    min-height: 80mm;
+    margin: 6mm auto 0;
     padding: 7mm 7mm 4mm;
     overflow: hidden;
     color: #111827;
@@ -3045,11 +3046,11 @@ button:disabled {
 
   .print-report {
     display: grid;
-    width: 184mm;
-    max-width: 184mm;
+    width: 196mm;
+    max-width: 196mm;
     max-height: 274mm;
-    min-height: 0;
-    margin: 8mm 0 0;
+    min-height: 80mm;
+    margin: 6mm auto 0;
     padding: 7mm 7mm 4mm;
     overflow: hidden;
     color: #111827;
