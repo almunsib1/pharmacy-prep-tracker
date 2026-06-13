@@ -3032,11 +3032,11 @@ button:disabled {
   }
 
   .print-report {
-    width: 196mm;
-    max-width: 196mm;
+    width: 100%;
+    max-width: none;
     max-height: none;
-    margin: 0 auto;
-    padding: 8mm 9mm 6mm;
+    margin: 0;
+    padding: 8mm 7mm 6mm;
     border-radius: 8px;
     gap: 8px;
   }
