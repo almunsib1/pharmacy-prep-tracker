@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة المستخدمين الموحدة</title>
+
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;padding:16px;color:#168fb3}
+.container{max-width:1120px;margin:auto;background:#fff;padding:22px;border-radius:14px;box-shadow:0 10px 25px rgba(0,0,0,.1)}
+.top-bar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;direction:rtl}
+.logo{width:120px;height:120px;object-fit:contain}
+.official-header{width:fit-content;max-width:100%;text-align:start;margin-inline-start:0;margin-inline-end:auto;transform:translateY(14px)}
+.official-header h2,.official-header h3{margin:2px 0;font-size:13px;line-height:1.4;color:#168fb3}
+[dir="rtl"] .official-header{padding-left:8px;border-left:4px solid #168fb3}
+[dir="ltr"] .official-header{padding-right:8px;border-right:4px solid #168fb3}
+hr{border:none;border-top:1px solid #e5e7eb;margin:14px 0}
+.meta-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.date-box{color:#168fb3;padding:6px 10px;font-size:13px;font-weight:bold;text-align:center}
+.language-btn,.secondary-btn{border:1px solid #cbd5e1;background:#fff;cursor:pointer;font-size:13px;font-weight:bold;color:#168fb3;padding:7px 10px;border-radius:8px}
+.language-btn:hover,.secondary-btn:hover{background:#f9fafb}
+.page-title{text-align:center;font-size:24px;font-weight:bold;margin:14px 0 10px;color:#168fb3}
+.login-card,.panel,.empty-box{border:1px solid #e5e7eb;background:#f9fafb;border-radius:8px;padding:14px;margin-top:14px}
+.login-card{max-width:300px;margin:14px auto 0}
+label{font-weight:bold;display:block;margin-bottom:3px;color:#111827;font-size:13px}
+input{width:100%;height:36px;padding:7px 10px;margin-top:5px;margin-bottom:10px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;background:#fff;text-align:start}
+.primary-btn{padding:9px 18px;background:#168fb3;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer}
+.primary-btn:disabled{background:#94a3b8;cursor:not-allowed}
+.login-actions{display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
+.login-actions .primary-btn,.login-actions .secondary-btn{width:36px;height:36px;margin:0;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:18px;line-height:1}
+.admin-top{display:flex;align-items:center;justify-content:flex-start;gap:8px;border:none;background:transparent;padding:0;margin-top:10px}
+.admin-name{font-weight:bold;color:#168fb3}
+.logout-btn{border:none;background:transparent;color:#168fb3;font-size:22px;cursor:pointer;padding:4px}
+.form-grid{display:grid;grid-template-columns:180px 140px 220px;gap:10px;align-items:end;justify-content:center;max-width:620px;margin:0 auto}
+.permissions-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:4px auto 10px}
+.check-pill{height:36px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#111827;font-size:13px;padding:0 12px}
+.check-pill input{width:auto;height:auto;margin:0}
+.form-actions{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:2px}
+.form-actions .primary-btn,.form-actions .secondary-btn{height:36px;margin:0;min-width:120px}
+.table-wrap{overflow-x:auto;margin-top:16px}
+table{width:100%;border-collapse:collapse;min-width:900px;background:#fff}
+th,td{padding:8px;border:1px solid #e5e7eb;text-align:center;color:#111827;font-size:13px}
+th{background:#168fb3;color:#fff}
+.status-pill{display:inline-block;min-width:70px;padding:4px 8px;border-radius:8px;font-weight:bold;font-size:12px}
+.status-active{background:#ecfdf5;color:#047857}
+.status-inactive{background:#fff7ed;color:#9a3412}
+.status-none{background:#f1f5f9;color:#64748b}
+.row-actions{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:nowrap}
+.icon-only{border:none;background:transparent;cursor:pointer;font-size:18px;line-height:1;padding:2px}
+.edit-btn{color:#168fb3}
+.delete-btn{color:#b91c1c}
+#result,#loginResult{display:none;margin-top:12px;padding:10px;border-radius:8px;text-align:center}
+#result.error,#loginResult.error{display:block;background:#fef2f2;color:#991b1b}
+#result.success,#loginResult.success{display:block;background:#ecfdf5;color:#065f46}
+@media (max-width:700px){
+body{padding:10px;background:#fff}
+.container{padding:14px;border-radius:0;box-shadow:none}
+.logo{width:84px;height:84px}
+.official-header{transform:translateY(10px)}
+.official-header h2,.official-header h3{font-size:12px}
+.page-title{font-size:20px}
+.date-box,.language-btn{font-size:12px;padding:6px 9px}
+.form-grid{grid-template-columns:1fr;max-width:320px}
+.form-actions{flex-wrap:wrap}
+.login-card{max-width:320px}
+.admin-top{justify-content:center}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<div class="top-bar">
+  <div class="official-header">
+    <h2 id="officialLine1"></h2>
+    <h3 id="officialLine2"></h3>
+    <h3 id="officialLine3"></h3>
+  </div>
+  <img class="logo" src="logo.png" alt="Logo">
+</div>
+
+<hr>
+
+<div class="meta-row">
+  <button type="button" class="language-btn" id="languageToggle" onclick="toggleLanguage()"></button>
+  <div class="date-box" id="dateBox"></div>
+</div>
+
+<div class="page-title" id="pageTitle"></div>
+
+<div id="loginView" class="login-card">
+  <label id="adminUsernameLabel" for="adminUsername"></label>
+  <input type="text" id="adminUsername" autocomplete="username">
+  <label for="adminPin">PIN</label>
+  <input type="password" id="adminPin" inputmode="numeric" autocomplete="current-password">
+  <div class="login-actions">
+    <button type="button" class="primary-btn" id="loginBtn" onclick="loginAdmin()"></button>
+    <button type="button" class="secondary-btn" id="changePinBtn" onclick="changeLoginPin()">🔑</button>
+  </div>
+  <div id="loginResult"></div>
+</div>
+
+<div id="adminView" style="display:none">
+  <div class="admin-top">
+    <span class="admin-name" id="adminName"></span>
+    <button type="button" class="logout-btn" id="logoutBtn" onclick="logoutAdmin()"></button>
+  </div>
+
+  <div class="panel">
+    <div class="form-grid">
+      <div>
+        <label id="usernameLabel" for="usernameInput"></label>
+        <input type="text" id="usernameInput">
+      </div>
+      <div>
+        <label id="pinLabel" for="pinInput"></label>
+        <input type="text" id="pinInput">
+      </div>
+      <div>
+        <label id="nameLabel" for="nameInput"></label>
+        <input type="text" id="nameInput">
+      </div>
+    </div>
+    <div class="permissions-row">
+      <label class="check-pill">
+        <input id="medAccessInput" type="checkbox" checked>
+        <span id="medAccessLabel"></span>
+      </label>
+      <label class="check-pill">
+        <input id="mailAccessInput" type="checkbox">
+        <span id="mailAccessLabel"></span>
+      </label>
+      <label class="check-pill">
+        <input id="activeInput" type="checkbox" checked>
+        <span id="activeLabel"></span>
+      </label>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="primary-btn" id="saveUserBtn" onclick="saveUser()"></button>
+      <button type="button" class="secondary-btn" id="clearFormBtn" onclick="clearForm()"></button>
+    </div>
+  </div>
+
+  <div id="result"></div>
+  <div id="emptyBox" class="empty-box" style="display:none"></div>
+
+  <div class="table-wrap">
+    <table id="usersTable" style="display:none">
+      <thead>
+        <tr>
+          <th id="nameHeader"></th>
+          <th id="usernameHeader"></th>
+          <th id="pinHeader"></th>
+          <th id="medHeader"></th>
+          <th id="mailHeader"></th>
+          <th id="editHeader"></th>
+          <th id="deleteHeader"></th>
+        </tr>
+      </thead>
+      <tbody id="usersBody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script>
+const MED_API_URL = "https://script.google.com/macros/s/AKfycbw9JM87uiSHihWDP0N1gn4IskEG_8O-fWleathLZW9Wwbs915UQz8Gq5k2dIwAGImCF/exec";
+const MAIL_API_URL = "https://script.google.com/macros/s/AKfycbw0jSrbe1SM596Kyv0EpB6VTKEXT81c2Cn8Wlc2lEQ_RzbrS9b6w-k4gyrflwPBTgpKSQ/exec";
+
+let currentLang = "ar";
+let adminUsername = sessionStorage.getItem("unifiedAdminUsername") || "";
+let adminPin = sessionStorage.getItem("unifiedAdminPin") || "";
+let editingUsername = "";
+let users = [];
+let inactivityTimer = null;
+const INACTIVITY_LIMIT_MS = 30 * 60 * 1000;
+
+const text = {
+  ar: {
+    officialLine1: "تجمع المدينة المنورة الصحي",
+    officialLine2: "مستشفى الملك فهد بالمدينة المنورة",
+    officialLine3: "إدارة الرعاية الصيدلانية",
+    pageTitle: "إدارة المستخدمين الموحدة",
+    username: "اسم المستخدم",
+    pin: "PIN",
+    name: "الاسم",
+    login: "تسجيل الدخول",
+    invalidLogin: "ليس لديك صلاحيات المستخدم الرئيسي.",
+    logout: "تسجيل الخروج",
+    medAccess: "حجز المواعيد",
+    mailAccess: "وصفات البريد",
+    active: "نشط",
+    inactive: "غير نشط",
+    noAccess: "لا يوجد",
+    save: "إضافة مستخدم",
+    update: "تحديث المستخدم",
+    clear: "مسح الحقول",
+    edit: "تعديل",
+    delete: "حذف",
+    loading: "جاري التحميل...",
+    noUsers: "لا يوجد مستخدمون.",
+    saved: "تم حفظ بيانات المستخدم.",
+    deleted: "تم حذف المستخدم.",
+    failed: "تعذر تنفيذ العملية.",
+    confirmDelete: "هل تريد حذف المستخدم من المشروعين؟",
+    pinRequired: "أدخل PIN للمستخدم عند منحه صلاحية وصفات البريد."
+  },
+  en: {
+    officialLine1: "Madinah Health Cluster",
+    officialLine2: "King Fahad Hospital - Madinah",
+    officialLine3: "Pharmaceutical Care Administration",
+    pageTitle: "Unified User Management",
+    username: "Username",
+    pin: "PIN",
+    name: "Name",
+    login: "Login",
+    invalidLogin: "You do not have main admin permissions.",
+    logout: "Logout",
+    medAccess: "Appointments",
+    mailAccess: "Prescription Mail",
+    active: "Active",
+    inactive: "Inactive",
+    noAccess: "No Access",
+    save: "Add User",
+    update: "Update User",
+    clear: "Clear Form",
+    edit: "Edit",
+    delete: "Delete",
+    loading: "Loading...",
+    noUsers: "No users found.",
+    saved: "User data saved.",
+    deleted: "User deleted.",
+    failed: "Unable to complete the action.",
+    confirmDelete: "Delete this user from both projects?",
+    pinRequired: "Enter a PIN when granting Prescription Mail access."
+  }
+};
+
+function setLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.getElementById("officialLine1").innerText = text[lang].officialLine1;
+  document.getElementById("officialLine2").innerText = text[lang].officialLine2;
+  document.getElementById("officialLine3").innerText = text[lang].officialLine3;
+  document.getElementById("pageTitle").innerText = text[lang].pageTitle;
+  document.getElementById("adminUsernameLabel").innerText = text[lang].username;
+  document.getElementById("loginBtn").innerText = "↵";
+  document.getElementById("loginBtn").title = text[lang].login;
+  document.getElementById("loginBtn").setAttribute("aria-label", text[lang].login);
+  document.getElementById("changePinBtn").title = "PIN";
+  document.getElementById("logoutBtn").innerText = "⏻";
+  document.getElementById("logoutBtn").title = text[lang].logout;
+  document.getElementById("logoutBtn").setAttribute("aria-label", text[lang].logout);
+  document.getElementById("usernameLabel").innerText = text[lang].username;
+  document.getElementById("pinLabel").innerText = text[lang].pin;
+  document.getElementById("nameLabel").innerText = text[lang].name;
+  document.getElementById("medAccessLabel").innerText = text[lang].medAccess;
+  document.getElementById("mailAccessLabel").innerText = text[lang].mailAccess;
+  document.getElementById("activeLabel").innerText = text[lang].active;
+  document.getElementById("saveUserBtn").innerText = editingUsername ? text[lang].update : text[lang].save;
+  document.getElementById("clearFormBtn").innerText = text[lang].clear;
+  document.getElementById("nameHeader").innerText = text[lang].name;
+  document.getElementById("usernameHeader").innerText = text[lang].username;
+  document.getElementById("pinHeader").innerText = text[lang].pin;
+  document.getElementById("medHeader").innerText = text[lang].medAccess;
+  document.getElementById("mailHeader").innerText = text[lang].mailAccess;
+  document.getElementById("editHeader").innerText = text[lang].edit;
+  document.getElementById("deleteHeader").innerText = text[lang].delete;
+  document.getElementById("languageToggle").innerText = "🌐 ع | E";
+  renderDate();
+  renderUsers();
+}
+
+function toggleLanguage() {
+  setLanguage(currentLang === "ar" ? "en" : "ar");
+}
+
+function renderDate() {
+  const now = new Date();
+  const date = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Riyadh" }).format(now);
+  const dayName = new Intl.DateTimeFormat(currentLang === "ar" ? "ar-SA" : "en-US", {
+    timeZone: "Asia/Riyadh",
+    weekday: "long"
+  }).format(now);
+  document.getElementById("dateBox").innerText = `${dayName} - ${date}`;
+}
+
+async function loginAdmin() {
+  const username = document.getElementById("adminUsername").value.trim();
+  const pin = document.getElementById("adminPin").value.trim();
+
+  try {
+    const results = await Promise.allSettled([
+      medApi({ action: "adminLogin", username, pin }),
+      mailApi("adminLogin", { username, pin })
+    ]);
+    const medOk = results[0].status === "fulfilled" && results[0].value.success;
+    const mailOk = results[1].status === "fulfilled" && results[1].value.ok;
+
+    if (!medOk || !mailOk) {
+      showLoginResult("error", text[currentLang].invalidLogin);
+      return;
+    }
+
+    adminUsername = "Admin";
+    adminPin = pin;
+    sessionStorage.setItem("unifiedAdminUsername", adminUsername);
+    sessionStorage.setItem("unifiedAdminPin", adminPin);
+    resetInactivityTimer();
+    showAdminView();
+  } catch (error) {
+    showLoginResult("error", text[currentLang].invalidLogin);
+  }
+}
+
+function logoutAdmin() {
+  sessionStorage.removeItem("unifiedAdminUsername");
+  sessionStorage.removeItem("unifiedAdminPin");
+  adminUsername = "";
+  adminPin = "";
+  users = [];
+  document.getElementById("adminView").style.display = "none";
+  document.getElementById("loginView").style.display = "block";
+}
+
+function showAdminView() {
+  document.getElementById("loginView").style.display = "none";
+  document.getElementById("adminView").style.display = "block";
+  document.getElementById("adminName").innerText = adminUsername;
+  startInactivityWatcher();
+  loadUsers();
+}
+
+async function changeLoginPin() {
+  const username = document.getElementById("adminUsername").value.trim() || window.prompt("أدخل اسم المستخدم:");
+  if (!username) return;
+  const currentPin = window.prompt("أدخل PIN الحالي:");
+  if (!currentPin) return;
+  const newPin = window.prompt("أدخل PIN الجديد:");
+  if (!newPin) return;
+  const confirmPin = window.prompt("أعد إدخال PIN الجديد:");
+
+  if (newPin !== confirmPin) {
+    showLoginResult("error", "PIN الجديد غير متطابق.");
+    return;
+  }
+
+  try {
+    const results = await Promise.allSettled([
+      medApi({ action: "changeLoginPin", username, currentPin, newPin }),
+      mailApi("changeLoginPin", { username, currentPin, newPin })
+    ]);
+    const medOk = results[0].status === "fulfilled" && results[0].value.success;
+    const mailOk = results[1].status === "fulfilled" && results[1].value.ok;
+
+    if (!medOk || !mailOk) {
+      showLoginResult("error", text[currentLang].failed);
+      return;
+    }
+
+    adminPin = newPin;
+    sessionStorage.setItem("unifiedAdminPin", adminPin);
+    showLoginResult("success", "تم تغيير PIN بنجاح.");
+  } catch (error) {
+    showLoginResult("error", text[currentLang].failed);
+  }
+}
+
+function startInactivityWatcher() {
+  ["click", "keydown", "touchstart", "mousemove"].forEach(eventName => {
+    window.addEventListener(eventName, resetInactivityTimer, { passive: true });
+  });
+  resetInactivityTimer();
+}
+
+function resetInactivityTimer() {
+  window.clearTimeout(inactivityTimer);
+  inactivityTimer = window.setTimeout(() => {
+    if (adminUsername && adminPin) {
+      logoutAdmin();
+    }
+  }, INACTIVITY_LIMIT_MS);
+}
+
+async function loadUsers() {
+  clearResult();
+  document.getElementById("emptyBox").style.display = "block";
+  document.getElementById("emptyBox").innerText = text[currentLang].loading;
+  document.getElementById("usersTable").style.display = "none";
+
+  try {
+    const [medUsers, mailUsers] = await Promise.all([
+      medApi({ action: "adminListEmployees" }),
+      mailApi("listUsers")
+    ]);
+
+    users = mergeUsers(
+      medUsers.success ? medUsers.employees || [] : [],
+      mailUsers.ok ? mailUsers.users || [] : []
+    );
+    renderUsers();
+  } catch (error) {
+    users = [];
+    showResult("error", text[currentLang].failed);
+    renderUsers();
+  }
+}
+
+function mergeUsers(medUsers, mailUsers) {
+  const map = {};
+
+  medUsers.forEach(user => {
+    const key = user.username.toLowerCase();
+    map[key] = map[key] || { username: user.username, name: user.name, pin: user.password || "", med: null, mail: null };
+    map[key].username = user.username;
+    map[key].name = user.name || map[key].name;
+    map[key].pin = user.password || map[key].pin;
+    map[key].med = { active: user.active !== false };
+  });
+
+  mailUsers.forEach(user => {
+    const key = user.username.toLowerCase();
+    map[key] = map[key] || { username: user.username, name: user.name, pin: "", med: null, mail: null };
+    map[key].username = map[key].username || user.username;
+    map[key].name = map[key].name || user.name || user.username;
+    map[key].mail = { active: user.active !== false };
+  });
+
+  return Object.values(map).sort((a, b) => a.username.localeCompare(b.username));
+}
+
+async function saveUser() {
+  const username = document.getElementById("usernameInput").value.trim();
+  const pin = document.getElementById("pinInput").value.trim();
+  const name = document.getElementById("nameInput").value.trim();
+  const medAccess = document.getElementById("medAccessInput").checked;
+  const mailAccess = document.getElementById("mailAccessInput").checked;
+  const active = document.getElementById("activeInput").checked;
+  const existing = users.find(user => user.username.toLowerCase() === (editingUsername || username).toLowerCase());
+
+  if (!username || !name || (!medAccess && !mailAccess)) {
+    showResult("error", text[currentLang].failed + " (MISSING_FIELDS)");
+    return;
+  }
+
+  if (mailAccess && !pin && (!existing || !existing.pin)) {
+    showResult("error", text[currentLang].pinRequired);
+    return;
+  }
+
+  const finalPin = pin || (existing ? existing.pin : "");
+  const tasks = [];
+
+  if (medAccess) {
+    tasks.push(saveMedUser(existing, { username, pin: finalPin, name, active }));
+  } else if (existing && existing.med) {
+    tasks.push(medApi({ action: "adminDeleteEmployee", username: existing.username }));
+  }
+
+  if (mailAccess) {
+    tasks.push(saveMailUser(existing, { username, pin: finalPin, name, active }));
+  } else if (existing && existing.mail) {
+    tasks.push(mailApi("deleteUser", { username: existing.username }));
+  }
+
+  try {
+    const results = await Promise.all(tasks);
+    const failed = results.some(result => !(result.success || result.ok));
+
+    if (failed) {
+      showResult("error", text[currentLang].failed);
+      return;
+    }
+
+    showResult("success", text[currentLang].saved);
+    clearForm();
+    await loadUsers();
+  } catch (error) {
+    showResult("error", text[currentLang].failed);
+  }
+}
+
+function saveMedUser(existing, user) {
+  if (existing && existing.med) {
+    return medApi({
+      action: "adminUpdateEmployee",
+      originalUsername: existing.username,
+      username: user.username,
+      password: user.pin,
+      name: user.name,
+      active: user.active
+    });
+  }
+
+  return medApi({
+    action: "adminAddEmployee",
+    username: user.username,
+    password: user.pin,
+    name: user.name,
+    active: user.active
+  });
+}
+
+function saveMailUser(existing, user) {
+  if (existing && existing.mail) {
+    return mailApi("updateUser", {
+      originalUsername: existing.username,
+      username: user.username,
+      pin: user.pin,
+      name: user.name,
+      active: user.active
+    });
+  }
+
+  return mailApi("addUser", {
+    username: user.username,
+    pin: user.pin,
+    name: user.name,
+    active: user.active
+  });
+}
+
+function editUser(username) {
+  const user = users.find(item => item.username === username);
+  if (!user) return;
+
+  editingUsername = user.username;
+  document.getElementById("usernameInput").value = user.username;
+  document.getElementById("pinInput").value = user.pin || "";
+  document.getElementById("nameInput").value = user.name || "";
+  document.getElementById("medAccessInput").checked = Boolean(user.med);
+  document.getElementById("mailAccessInput").checked = Boolean(user.mail);
+  document.getElementById("activeInput").checked = getUserActive(user);
+  document.getElementById("saveUserBtn").innerText = text[currentLang].update;
+}
+
+async function deleteUser(username) {
+  if (!confirm(text[currentLang].confirmDelete)) return;
+  const user = users.find(item => item.username === username);
+  if (!user) return;
+
+  const tasks = [];
+  if (user.med) tasks.push(medApi({ action: "adminDeleteEmployee", username }));
+  if (user.mail) tasks.push(mailApi("deleteUser", { username }));
+
+  try {
+    await Promise.all(tasks);
+    showResult("success", text[currentLang].deleted);
+    await loadUsers();
+  } catch (error) {
+    showResult("error", text[currentLang].failed);
+  }
+}
+
+function clearForm() {
+  editingUsername = "";
+  document.getElementById("usernameInput").value = "";
+  document.getElementById("pinInput").value = "";
+  document.getElementById("nameInput").value = "";
+  document.getElementById("medAccessInput").checked = true;
+  document.getElementById("mailAccessInput").checked = false;
+  document.getElementById("activeInput").checked = true;
+  document.getElementById("saveUserBtn").innerText = text[currentLang].save;
+}
+
+function renderUsers() {
+  const body = document.getElementById("usersBody");
+  const table = document.getElementById("usersTable");
+  const empty = document.getElementById("emptyBox");
+
+  if (!body) return;
+  body.innerHTML = "";
+
+  if (!users.length) {
+    table.style.display = "none";
+    empty.style.display = "block";
+    empty.innerText = text[currentLang].noUsers;
+    return;
+  }
+
+  empty.style.display = "none";
+  table.style.display = "table";
+
+  users.forEach(user => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${escapeHtml(user.name || "")}</td>
+      <td>${escapeHtml(user.username)}</td>
+      <td>${escapeHtml(user.pin || "****")}</td>
+      <td>${projectStatus(user.med)}</td>
+      <td>${projectStatus(user.mail)}</td>
+      <td><button type="button" class="icon-only edit-btn" title="${text[currentLang].edit}" onclick="editUser('${escapeAttribute(user.username)}')">✎</button></td>
+      <td><button type="button" class="icon-only delete-btn" title="${text[currentLang].delete}" onclick="deleteUser('${escapeAttribute(user.username)}')">✕</button></td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+function projectStatus(project) {
+  if (!project) {
+    return `<span class="status-pill status-none">${text[currentLang].noAccess}</span>`;
+  }
+
+  return project.active
+    ? `<span class="status-pill status-active">${text[currentLang].active}</span>`
+    : `<span class="status-pill status-inactive">${text[currentLang].inactive}</span>`;
+}
+
+function getUserActive(user) {
+  if (user.med) return user.med.active;
+  if (user.mail) return user.mail.active;
+  return true;
+}
+
+async function medApi(payload) {
+  const response = await fetch(MED_API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      adminUsername,
+      adminPin,
+      ...payload
+    })
+  });
+  return response.json();
+}
+
+async function mailApi(action, payload = {}) {
+  const response = await fetch(MAIL_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({
+      action,
+      adminUsername,
+      adminPin,
+      ...payload
+    })
+  });
+  return response.json();
+}
+
+function showResult(type, message) {
+  const result = document.getElementById("result");
+  result.className = type;
+  result.innerText = message;
+}
+
+function clearResult() {
+  const result = document.getElementById("result");
+  result.className = "";
+  result.innerText = "";
+}
+
+function showLoginResult(type, message) {
+  const result = document.getElementById("loginResult");
+  result.className = type;
+  result.innerText = message;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function escapeAttribute(value) {
+  return String(value ?? "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+}
+
+setLanguage("ar");
+if (adminUsername && adminPin) {
+  showAdminView();
+}
+</script>
+</body>
+</html>
