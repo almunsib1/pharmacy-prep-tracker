@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title id="documentTitle">بوابة وصفات البريد</title>
+  <link rel="stylesheet" href="style.css?v=20260612-login-actions">
+</head>
+<body class="portal-body">
+  <main class="app-shell employee-shell portal-shell">
+    <header class="official-top">
+      <img class="official-logo" src="logo.png" alt="Logo">
+      <div class="official-header">
+        <h2 id="officialLine1">تجمع المدينة المنورة الصحي</h2>
+        <h3 id="officialLine2">مستشفى الملك فهد بالمدينة المنورة</h3>
+        <h3 id="officialLine3">إدارة الرعاية الصيدلانية</h3>
+      </div>
+    </header>
+
+    <hr class="official-divider">
+
+    <div class="employee-meta">
+      <div class="date-box" id="dateBox"></div>
+      <button type="button" class="language-chip" id="languageToggle" onclick="toggleLanguage()">🌐 ع | E</button>
+    </div>
+
+    <section class="portal-hero" id="portalHero" aria-label="بوابة وصفات البريد">
+      <h1 id="portalTitle">البريد الدوائي</h1>
+    </section>
+
+    <nav class="portal-grid" id="portalNav" aria-label="روابط صفحات النظام">
+      <a class="portal-card primary" href="prep.html" target="_blank" rel="noopener">
+        <span class="portal-icon" aria-hidden="true">💊</span>
+        <span>
+          <strong id="prepTitle">وصفات البريد الدوائي</strong>
+          <small id="prepDesc">قراءة MRN وإرسال الوصفة بعد المعالجة</small>
+        </span>
+      </a>
+
+      <a class="portal-card upload" href="upload.html" target="_blank" rel="noopener">
+        <span class="portal-icon" aria-hidden="true">⇧</span>
+        <span>
+          <strong id="uploadTitle">إرسال القائمة اليومية</strong>
+          <small id="uploadDesc">رفع ملف Excel أو CSV لقائمة اليوم</small>
+        </span>
+      </a>
+
+      <a class="portal-card dashboard" href="dashboard.html" target="_blank" rel="noopener">
+        <span class="portal-icon" aria-hidden="true">◫</span>
+        <span>
+          <strong id="dashboardTitle">المؤشر اليومي للبريد الدوائي</strong>
+          <small id="dashboardDesc">متابعة الحالات والتقرير اليومي</small>
+        </span>
+      </a>
+
+    </nav>
+    <a class="main-home-link" id="homeLink" href="../home.html" title="العودة إلى القائمة الرئيسية" aria-label="العودة إلى القائمة الرئيسية">&#8962;</a>
+  </main>
+  <script>
+    let currentLang = "ar";
+    const text = {
+      ar: {
+        documentTitle: "بوابة وصفات البريد",
+        officialLine1: "تجمع المدينة المنورة الصحي",
+        officialLine2: "مستشفى الملك فهد بالمدينة المنورة",
+        officialLine3: "إدارة الرعاية الصيدلانية",
+        portalLabel: "بوابة وصفات البريد",
+        navLabel: "روابط صفحات النظام",
+        portalTitle: "البريد الدوائي",
+        prepTitle: "وصفات البريد الدوائي",
+        prepDesc: "قراءة MRN وإرسال الوصفة بعد المعالجة",
+        uploadTitle: "إرسال القائمة اليومية",
+        uploadDesc: "رفع ملف Excel أو CSV لقائمة اليوم",
+        dashboardTitle: "المؤشر اليومي للبريد الدوائي",
+        dashboardDesc: "متابعة الحالات والتقرير اليومي",
+        home: "العودة إلى القائمة الرئيسية"
+      },
+      en: {
+        documentTitle: "Prescription Mail Portal",
+        officialLine1: "Madinah Health Cluster",
+        officialLine2: "King Fahad Hospital - Madinah",
+        officialLine3: "Pharmaceutical Care Administration",
+        portalLabel: "Prescription Mail Portal",
+        navLabel: "System page links",
+        portalTitle: "Mail Pharmacy",
+        prepTitle: "Mail Pharmacy Prescription",
+        prepDesc: "Read MRN and submit the prescription after processing",
+        uploadTitle: "Submit Daily List",
+        uploadDesc: "Upload an Excel or CSV file for today's list",
+        dashboardTitle: "Mail Pharmacy Dashboard",
+        dashboardDesc: "Monitor cases and the daily report",
+        home: "Back to Main Menu"
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.title = text[lang].documentTitle;
+      document.getElementById("officialLine1").textContent = text[lang].officialLine1;
+      document.getElementById("officialLine2").textContent = text[lang].officialLine2;
+      document.getElementById("officialLine3").textContent = text[lang].officialLine3;
+      document.getElementById("portalHero").setAttribute("aria-label", text[lang].portalLabel);
+      document.getElementById("portalNav").setAttribute("aria-label", text[lang].navLabel);
+      document.getElementById("portalTitle").textContent = text[lang].portalTitle;
+      document.getElementById("prepTitle").textContent = text[lang].prepTitle;
+      document.getElementById("prepDesc").textContent = text[lang].prepDesc;
+      document.getElementById("uploadTitle").textContent = text[lang].uploadTitle;
+      document.getElementById("uploadDesc").textContent = text[lang].uploadDesc;
+      document.getElementById("dashboardTitle").textContent = text[lang].dashboardTitle;
+      document.getElementById("dashboardDesc").textContent = text[lang].dashboardDesc;
+      document.getElementById("homeLink").title = text[lang].home;
+      document.getElementById("homeLink").setAttribute("aria-label", text[lang].home);
+      document.getElementById("languageToggle").textContent = "🌐 ع | E";
+      renderDate();
+    }
+
+    function toggleLanguage() {
+      setLanguage(currentLang === "ar" ? "en" : "ar");
+    }
+
+    function renderDate() {
+      const now = new Date();
+      const date = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Riyadh" }).format(now);
+      const dayName = new Intl.DateTimeFormat(currentLang === "ar" ? "ar-SA" : "en-US", {
+        timeZone: "Asia/Riyadh",
+        weekday: "long"
+      }).format(now);
+      document.getElementById("dateBox").textContent = `${dayName} - ${date}`;
+    }
+    setLanguage("ar");
+  </script>
+</body>
+</html>
