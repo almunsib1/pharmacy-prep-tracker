@@ -299,7 +299,7 @@ async function loginAdmin() {
     const medOk = results[0].status === "fulfilled" && results[0].value.success;
     const mailOk = results[1].status === "fulfilled" && results[1].value.ok;
 
-    if (!medOk || !mailOk) {
+    if (!medOk && !mailOk) {
       showLoginResult("error", text[currentLang].invalidLogin);
       return;
     }
@@ -391,10 +391,12 @@ async function loadUsers() {
   document.getElementById("usersTable").style.display = "none";
 
   try {
-    const [medUsers, mailUsers] = await Promise.all([
+    const results = await Promise.allSettled([
       medApi({ action: "adminListEmployees" }),
       mailApi("listUsers")
     ]);
+    const medUsers = results[0].status === "fulfilled" ? results[0].value : { success: false, employees: [] };
+    const mailUsers = results[1].status === "fulfilled" ? results[1].value : { ok: false, users: [] };
 
     users = mergeUsers(
       medUsers.success ? medUsers.employees || [] : [],
